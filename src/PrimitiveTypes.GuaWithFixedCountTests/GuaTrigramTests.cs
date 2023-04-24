@@ -1,33 +1,26 @@
-﻿using YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using YiJingFramework.PrimitiveTypes.GuaWithFixedCount.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount.Tests;
 
 [TestClass()]
-public class TrigramTests
+public class GuaTrigramTests
 {
     [TestMethod()]
-    public void TrigramTest()
+    public void GuaTrigramTest()
     {
-        var trigram1 = new Trigram(Yinyang.Yang, Yinyang.Yin, Yinyang.Yang);
-        var trigram2 = new Trigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang });
-        var trigram3 = new Trigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang }.AsEnumerable());
+        var trigram1 = new GuaTrigram(Yinyang.Yang, Yinyang.Yin, Yinyang.Yang);
+        var trigram2 = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang });
+        var trigram3 = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang }.AsEnumerable());
 
         Assert.AreEqual(trigram1, trigram2);
         Assert.AreEqual(trigram2, trigram3);
         Assert.AreEqual(trigram1, trigram3);
 
         _ = Assert.ThrowsException<ArgumentException>(() => {
-            _ = new Trigram(Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin);
+            _ = new GuaTrigram(Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin);
         });
         _ = Assert.ThrowsException<ArgumentException>(() => {
-            _ = new Trigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin }.AsEnumerable());
+            _ = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin }.AsEnumerable());
         });
     }
 
@@ -41,7 +34,7 @@ public class TrigramTests
                 .Select(_ => random.Next(0, 2))
                 .Select(i => (Yinyang)i)
                 .ToArray();
-            var gua = new Trigram(lines);
+            var gua = new GuaTrigram(lines);
             Assert.IsTrue(gua.SequenceEqual(lines));
         }
     }
@@ -61,8 +54,8 @@ public class TrigramTests
                 .Select(_ => random.Next(0, 2))
                 .Select(i => (Yinyang)i)
                 .ToArray();
-            var trigram1 = new Trigram(lines1);
-            var trigram2 = new Trigram(lines2);
+            var trigram1 = new GuaTrigram(lines1);
+            var trigram2 = new GuaTrigram(lines2);
             Assert.AreEqual(
                 trigram1.AsGua().CompareTo(trigram2.AsGua()),
                 trigram1.CompareTo(trigram2));
@@ -81,7 +74,7 @@ public class TrigramTests
                 .Select(_ => random.Next(0, 2))
                 .Select(i => (Yinyang)i)
                 .ToArray();
-            var gua1 = new Trigram(lines);
+            var gua1 = new GuaTrigram(lines);
             var gua2 = new Gua(lines);
             Assert.AreEqual(gua1.GetHashCode(), gua2.GetHashCode());
         }
@@ -102,8 +95,8 @@ public class TrigramTests
                 .Select(_ => random.Next(0, 2))
                 .Select(i => (Yinyang)i)
                 .ToArray();
-            var trigram1 = new Trigram(lines1);
-            var trigram2 = new Trigram(lines2);
+            var trigram1 = new GuaTrigram(lines1);
+            var trigram2 = new GuaTrigram(lines2);
             Assert.AreEqual(
                 trigram1.AsGua().Equals(trigram2.AsGua()),
                 trigram1.Equals(trigram2));
@@ -122,7 +115,7 @@ public class TrigramTests
                 .Select(_ => random.Next(0, 2))
                 .Select(i => (Yinyang)i)
                 .ToArray();
-            var gua1 = new Trigram(lines);
+            var gua1 = new GuaTrigram(lines);
             var gua2 = new Gua(lines);
             Assert.AreEqual(gua1.ToString(), gua2.ToString());
         }
@@ -138,8 +131,8 @@ public class TrigramTests
                 .Select(_ => random.Next(0, 2))
                 .Select(i => (Yinyang)i)
                 .ToArray();
-            var gua1 = new Trigram(lines);
-            var gua2 = Trigram.Parse(gua1.ToString());
+            var gua1 = new GuaTrigram(lines);
+            var gua2 = GuaTrigram.Parse(gua1.ToString());
             Assert.AreEqual(gua1, gua2);
         }
     }
@@ -154,8 +147,8 @@ public class TrigramTests
                 .Select(_ => random.Next(0, 2))
                 .Select(i => (Yinyang)i)
                 .ToArray();
-            var gua1 = new Trigram(lines);
-            Assert.IsTrue(Trigram.TryParse(gua1.ToString(), out var gua2));
+            var gua1 = new GuaTrigram(lines);
+            Assert.IsTrue(GuaTrigram.TryParse(gua1.ToString(), out var gua2));
             Assert.AreEqual(gua1, gua2);
         }
     }
@@ -170,7 +163,7 @@ public class TrigramTests
                 .Select(_ => random.Next(0, 2))
                 .Select(i => (Yinyang)i)
                 .ToArray();
-            var gua1 = new Trigram(lines);
+            var gua1 = new GuaTrigram(lines);
             var gua2 = new Gua(lines);
             Assert.AreEqual(gua2, gua1.AsGua());
         }

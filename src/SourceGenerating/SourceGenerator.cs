@@ -70,10 +70,10 @@ namespace SourceGenerating
         {
             context.AddSource($"GuaWith1Lines.g.cs", this.GenerateCode(1, null));
             context.AddSource($"GuaWith2Lines.g.cs", this.GenerateCode(2, null));
-            context.AddSource($"Trigram.g.cs", this.GenerateCode(3, "Trigram"));
+            context.AddSource($"GuaTrigram.g.cs", this.GenerateCode(3, "GuaTrigram"));
             context.AddSource($"GuaWith4Lines.g.cs", this.GenerateCode(4, null));
             context.AddSource($"GuaWith5Lines.g.cs", this.GenerateCode(5, null));
-            context.AddSource($"Hexagram.g.cs", this.GenerateCode(6, "Hexagram"));
+            context.AddSource($"GuaHexagram.g.cs", this.GenerateCode(6, "GuaHexagram"));
             context.AddSource($"GuaWith7Lines.g.cs", this.GenerateCode(7, null));
             context.AddSource($"GuaWith8Lines.g.cs", this.GenerateCode(8, null));
             context.AddSource($"GuaWith9Lines.g.cs", this.GenerateCode(9, null));
