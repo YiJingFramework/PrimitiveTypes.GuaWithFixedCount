@@ -1,0 +1,7 @@
+﻿namespace SourceGenerating
+{
+    public static class TemplatePath
+    {
+        public static string Path => "D:/YiJingFramework/PrimitiveTypes.GuaWithFixedCount/src/TemplateForSourceGeneration";
+    }
+}

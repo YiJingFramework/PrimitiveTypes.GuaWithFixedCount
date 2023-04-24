@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<RootNamespace>YiJingFramework.PrimitiveTypes.GuaWithFixedCount</RootNamespace>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<IsTrimmable>true</IsTrimmable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\PrimitiveTypes.GuaWithFixedCount\PrimitiveTypes.GuaWithFixedCount.csproj" />
+	</ItemGroup>
+	
+</Project>

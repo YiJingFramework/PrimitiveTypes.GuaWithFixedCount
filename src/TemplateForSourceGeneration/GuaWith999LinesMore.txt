@@ -1,0 +1,16 @@
+﻿    /// <summary>
+    /// 创建新实例。
+    /// Initializes a new instance.
+    /// </summary>
+    /// <param name="line0">
+    /// 第 <c>0</c> 爻。
+    /// Line <c>0</c>.
+    /// </param>
+    /// <param name="line1">
+    /// 第 <c>1</c> 爻。
+    /// Line <c>1</c>.
+    /// </param>
+    public GuaWith999Lines(Yinyang line0, Yinyang line1)
+    {
+        this.innerGua = new Gua(line0, line1);
+    }
