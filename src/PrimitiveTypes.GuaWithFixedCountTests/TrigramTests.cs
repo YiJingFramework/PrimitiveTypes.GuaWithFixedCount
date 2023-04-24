@@ -24,10 +24,10 @@ public class TrigramTests
         Assert.AreEqual(trigram1, trigram3);
 
         _ = Assert.ThrowsException<ArgumentException>(() => {
-            new Trigram(Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin);
+            _ = new Trigram(Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin);
         });
         _ = Assert.ThrowsException<ArgumentException>(() => {
-            new Trigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin }.AsEnumerable());
+            _ = new Trigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin }.AsEnumerable());
         });
     }
 
