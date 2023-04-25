@@ -51,7 +51,9 @@ namespace SourceGenerating
             {
                 _ = builder.Append($@"Yinyang line{i}, ");
             }
-            _ = builder.Remove(builder.Length - 2, 2);
+            if (lineCount != 0)
+                _ = builder.Remove(builder.Length - 2, 2);
+
             _ = builder.AppendLine(")");
             _ = builder.Append(@"    {
         this.innerGua = new Gua(");
@@ -59,7 +61,9 @@ namespace SourceGenerating
             {
                 _ = builder.Append($@"line{i}, ");
             }
-            _ = builder.Remove(builder.Length - 2, 2);
+            if (lineCount != 0)
+                _ = builder.Remove(builder.Length - 2, 2);
+
             _ = builder.AppendLine(");");
             _ = builder.AppendLine("    }");
             _ = builder.AppendLine("}");
@@ -68,7 +72,8 @@ namespace SourceGenerating
 
         public void Execute(GeneratorExecutionContext context)
         {
-            context.AddSource($"GuaWith1Lines.g.cs", this.GenerateCode(1, null));
+            context.AddSource($"GuaEmpty.g.cs", this.GenerateCode(0, "GuaEmpty"));
+            context.AddSource($"GuaWith1Line.g.cs", this.GenerateCode(1, "GuaWith1Line"));
             context.AddSource($"GuaWith2Lines.g.cs", this.GenerateCode(2, null));
             context.AddSource($"GuaTrigram.g.cs", this.GenerateCode(3, "GuaTrigram"));
             context.AddSource($"GuaWith4Lines.g.cs", this.GenerateCode(4, null));

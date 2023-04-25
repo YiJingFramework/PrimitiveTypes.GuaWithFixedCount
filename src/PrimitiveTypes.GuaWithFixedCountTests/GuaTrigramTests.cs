@@ -10,17 +10,11 @@ public class GuaTrigramTests
     {
         var trigram1 = new GuaTrigram(Yinyang.Yang, Yinyang.Yin, Yinyang.Yang);
         var trigram2 = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang });
-        var trigram3 = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang }.AsEnumerable());
 
         Assert.AreEqual(trigram1, trigram2);
-        Assert.AreEqual(trigram2, trigram3);
-        Assert.AreEqual(trigram1, trigram3);
 
         _ = Assert.ThrowsException<ArgumentException>(() => {
-            _ = new GuaTrigram(Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin);
-        });
-        _ = Assert.ThrowsException<ArgumentException>(() => {
-            _ = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin }.AsEnumerable());
+            _ = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin });
         });
     }
 

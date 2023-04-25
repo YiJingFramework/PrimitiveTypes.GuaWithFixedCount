@@ -22,24 +22,6 @@ public sealed partial class GuaWith999Lines :
     IStringConvertibleForJson<GuaWith999Lines>, IConvertableFromGua<GuaWith999Lines>
 {
     private readonly Gua innerGua;
-    /// <summary>
-    /// 创建新实例。
-    /// Initializes a new instance.
-    /// </summary>
-    /// <param name="lines">
-    /// 各爻的性质。
-    /// The lines' attributes.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="lines"/> 是 <c>null</c> 。
-    /// <paramref name="lines"/> is <c>null</c>.
-    /// </exception>
-    /// <exception cref="ArgumentException">
-    /// <paramref name="lines"/> 的长度不是 <c>999</c> 。
-    /// <paramref name="lines"/> doesn't exactly contains <c>999</c> Yinyangs.
-    /// </exception>
-    public GuaWith999Lines(params Yinyang[] lines)
-        : this((IEnumerable<Yinyang>)lines) { }
 
     /// <summary>
     /// 创建新实例。
