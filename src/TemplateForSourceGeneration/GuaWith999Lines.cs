@@ -19,7 +19,7 @@ namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 public sealed partial class GuaWith999Lines :
     IReadOnlyList<Yinyang>, IComparable<GuaWith999Lines>, IEquatable<GuaWith999Lines>,
     IParsable<GuaWith999Lines>, IEqualityOperators<GuaWith999Lines, GuaWith999Lines, bool>,
-    IStringConvertibleForJson<GuaWith999Lines>, IConvertableFromGua<GuaWith999Lines>
+    IStringConvertibleForJson<GuaWith999Lines>, IGuaWithXxxLines<GuaWith999Lines>
 {
     private readonly Gua innerGua;
 
@@ -159,6 +159,7 @@ public sealed partial class GuaWith999Lines :
     /// </exception>
     public static GuaWith999Lines Parse(string s)
     {
+        ArgumentNullException.ThrowIfNull(s);
         if (!Gua.TryParse(s, out var gua) || !TryFromGua(gua, out var result))
             throw new FormatException($"Cannot parse \"{s}\" as {nameof(GuaWith999Lines)}.");
         return result;
@@ -241,7 +242,7 @@ public sealed partial class GuaWith999Lines :
         return true;
     }
 
-    static bool IConvertableFromGua<GuaWith999Lines>.TryFromGua(
+    static bool IGuaWithXxxLines<GuaWith999Lines>.TryFromGua(
         Gua gua,
         [MaybeNullWhen(false)] out GuaWith999Lines result,
         [MaybeNullWhen(true)] out string message)

@@ -12,7 +12,7 @@ public class GuaAsFixedCountExtensionsTests
         var trigram = gua.As<GuaTrigram>();
         Assert.IsTrue(gua.SequenceEqual(trigram));
         Assert.AreEqual(gua, trigram.AsGua());
-        _ = Assert.ThrowsException<GuaConversionFailedException>(() => {
+        _ = Assert.ThrowsException<ArgumentException>(() => {
             _ = gua.As<GuaHexagram>();
         });
     }

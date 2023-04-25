@@ -24,17 +24,21 @@ public static partial class GuaAsFixedCountExtensions
     /// 结果。
     /// The result.
     /// </returns>
-    /// <exception cref="GuaConversionFailedException">
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="gua"/> 是 <c>null</c> 。
+    /// <paramref name="gua"/> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentException">
     /// 转换失败。
     /// Conversion failed.
     /// </exception>
     public static TGuaWithFixedCount As<TGuaWithFixedCount>(this Gua gua)
-        where TGuaWithFixedCount : IConvertableFromGua<TGuaWithFixedCount>
+        where TGuaWithFixedCount : IGuaWithXxxLines<TGuaWithFixedCount>
     {
         ArgumentNullException.ThrowIfNull(gua);
 
         if (!TGuaWithFixedCount.TryFromGua(gua, out var result, out var message))
-            throw new GuaConversionFailedException(message);
+            throw new ArgumentException(message);
         return result;
     }
 
@@ -59,9 +63,15 @@ public static partial class GuaAsFixedCountExtensions
     /// A value indicates whether it has been successfully converted or not.
     /// </returns>
     public static bool TryAs<TGuaWithFixedCount>(
-        this Gua gua, [MaybeNullWhen(false)] out TGuaWithFixedCount result)
-        where TGuaWithFixedCount : IConvertableFromGua<TGuaWithFixedCount>
+        this Gua? gua, [MaybeNullWhen(false)] out TGuaWithFixedCount result)
+        where TGuaWithFixedCount : IGuaWithXxxLines<TGuaWithFixedCount>
     {
+        if (gua is null)
+        {
+            result = default;
+            return false;
+        }
+
         return TGuaWithFixedCount.TryFromGua(gua, out result, out _);
     }
 }

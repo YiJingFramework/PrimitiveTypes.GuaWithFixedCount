@@ -3,11 +3,23 @@
 namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount.Extensions;
 
 /// <summary>
-/// 表示此类型可以从 <seealso cref="Gua"/> 进行转换。
-/// Indicates that the type could be converted from <seealso cref="Gua"/>s.
+/// 此接口只是为了
+/// <seealso cref="GuaAsFixedCountExtensions.As{TGuaWithFixedCount}(Gua)"/>
+/// 和
+/// <seealso cref="GuaAsFixedCountExtensions.TryAs{TGuaWithFixedCount}(Gua?, out TGuaWithFixedCount)"/>
+/// 使用。
+/// 请不要在其他场景中使用此接口。
+/// This Interface is only used for
+/// <seealso cref="GuaAsFixedCountExtensions.As{TGuaWithFixedCount}(Gua)"/>
+/// and
+/// <seealso cref="GuaAsFixedCountExtensions.TryAs{TGuaWithFixedCount}(Gua?, out TGuaWithFixedCount)"/>.
+/// Do not use this interface for other purposes.
 /// </summary>
-/// <typeparam name="TSelf"></typeparam>
-public interface IConvertableFromGua<TSelf> where TSelf : IConvertableFromGua<TSelf>
+/// <typeparam name="TSelf">
+/// 类型自身。
+/// The type itself.
+/// </typeparam>
+public interface IGuaWithXxxLines<TSelf> where TSelf : IGuaWithXxxLines<TSelf>
 {
     /// <summary>
     /// 从 <seealso cref="Gua"/> 进行转换。
