@@ -4,7 +4,6 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Text.Json.Serialization;
-using YiJingFramework.PrimitiveTypes.GuaWithFixedCount.Extensions;
 using YiJingFramework.PrimitiveTypes.Serialization;
 
 namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
@@ -19,7 +18,7 @@ namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 public sealed partial class GuaWith999Lines :
     IReadOnlyList<Yinyang>, IComparable<GuaWith999Lines>, IEquatable<GuaWith999Lines>,
     IParsable<GuaWith999Lines>, IEqualityOperators<GuaWith999Lines, GuaWith999Lines, bool>,
-    IStringConvertibleForJson<GuaWith999Lines>, IGuaWithXxxLines<GuaWith999Lines>
+    IStringConvertibleForJson<GuaWith999Lines>, IGuaWithFixedCount<GuaWith999Lines>
 {
     private readonly Gua innerGua;
 
@@ -231,6 +230,11 @@ public sealed partial class GuaWith999Lines :
         return this.innerGua;
     }
 
+    private GuaWith999Lines(Gua guaLengthChecked)
+    {
+        this.innerGua = guaLengthChecked;
+    }
+
     private static bool TryFromGua(Gua gua, [MaybeNullWhen(false)] out GuaWith999Lines result)
     {
         if (gua.Count is not 999)
@@ -242,15 +246,17 @@ public sealed partial class GuaWith999Lines :
         return true;
     }
 
-    static bool IGuaWithXxxLines<GuaWith999Lines>.TryFromGua(
-        Gua gua,
+    static bool IGuaWithFixedCount<GuaWith999Lines>.TryFromLines(
+        IEnumerable<Yinyang> lines,
         [MaybeNullWhen(false)] out GuaWith999Lines result,
         [MaybeNullWhen(true)] out string message)
     {
+        var gua = new Gua(lines);
+
         if (!TryFromGua(gua, out result))
         {
-            message = $"Cannot convert Gua '{gua}' to GuaWith999Lines " +
-                $"because its count of lines is not 999.";
+            message = $"Cannot create GuaWith999Lines with lines '{gua}' " +
+                $"because its count is not 999.";
             return false;
         }
         message = null;

@@ -33,11 +33,11 @@ public static partial class GuaAsFixedCountExtensions
     /// Conversion failed.
     /// </exception>
     public static TGuaWithFixedCount As<TGuaWithFixedCount>(this Gua gua)
-        where TGuaWithFixedCount : IGuaWithXxxLines<TGuaWithFixedCount>
+        where TGuaWithFixedCount : IGuaWithFixedCount<TGuaWithFixedCount>
     {
         ArgumentNullException.ThrowIfNull(gua);
 
-        if (!TGuaWithFixedCount.TryFromGua(gua, out var result, out var message))
+        if (!TGuaWithFixedCount.TryFromLines(gua, out var result, out var message))
             throw new ArgumentException(message);
         return result;
     }
@@ -64,7 +64,7 @@ public static partial class GuaAsFixedCountExtensions
     /// </returns>
     public static bool TryAs<TGuaWithFixedCount>(
         this Gua? gua, [MaybeNullWhen(false)] out TGuaWithFixedCount result)
-        where TGuaWithFixedCount : IGuaWithXxxLines<TGuaWithFixedCount>
+        where TGuaWithFixedCount : IGuaWithFixedCount<TGuaWithFixedCount>
     {
         if (gua is null)
         {
@@ -72,6 +72,6 @@ public static partial class GuaAsFixedCountExtensions
             return false;
         }
 
-        return TGuaWithFixedCount.TryFromGua(gua, out result, out _);
+        return TGuaWithFixedCount.TryFromLines(gua, out result, out _);
     }
 }
