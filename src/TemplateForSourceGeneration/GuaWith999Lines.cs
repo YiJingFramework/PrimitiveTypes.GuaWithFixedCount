@@ -74,6 +74,8 @@ public sealed partial class GuaWith999Lines :
     /// </summary>
     public int Count => 999;
 
+    static int IGuaWithFixedCount<GuaWith999Lines>.ExpectedCount => 999;
+
     /// <inheritdoc/>
     public IEnumerator<Yinyang> GetEnumerator()
     {
@@ -219,11 +221,11 @@ public sealed partial class GuaWith999Lines :
     #region Converting with Guas
     /// <summary>
     /// 转换为 <seealso cref="Gua"/> 。
-    /// Convert to <seealso cref="Gua"/>.
+    /// Convert to a <seealso cref="Gua"/>.
     /// </summary>
     /// <returns>
     /// 卦。
-    /// A Gua.
+    /// The Gua.
     /// </returns>
     public Gua AsGua()
     {
@@ -235,31 +237,15 @@ public sealed partial class GuaWith999Lines :
         this.innerGua = guaLengthChecked;
     }
 
-    private static bool TryFromGua(Gua gua, [MaybeNullWhen(false)] out GuaWith999Lines result)
+    /// <inheritdoc />
+    public static bool TryFromGua(Gua? gua, [MaybeNullWhen(false)] out GuaWith999Lines result)
     {
-        if (gua.Count is not 999)
+        if (gua?.Count is not 999)
         {
             result = null;
             return false;
         }
         result = new(gua);
-        return true;
-    }
-
-    static bool IGuaWithFixedCount<GuaWith999Lines>.TryFromLines(
-        IEnumerable<Yinyang> lines,
-        [MaybeNullWhen(false)] out GuaWith999Lines result,
-        [MaybeNullWhen(true)] out string message)
-    {
-        var gua = new Gua(lines);
-
-        if (!TryFromGua(gua, out result))
-        {
-            message = $"Cannot create GuaWith999Lines with lines '{gua}' " +
-                $"because its count is not 999.";
-            return false;
-        }
-        message = null;
         return true;
     }
     #endregion

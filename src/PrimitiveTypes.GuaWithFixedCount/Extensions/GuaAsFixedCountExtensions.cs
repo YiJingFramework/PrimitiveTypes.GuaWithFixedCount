@@ -37,8 +37,12 @@ public static partial class GuaAsFixedCountExtensions
     {
         ArgumentNullException.ThrowIfNull(gua);
 
-        if (!TGuaWithFixedCount.TryFromLines(gua, out var result, out var message))
-            throw new ArgumentException(message);
+        if (!TGuaWithFixedCount.TryFromGua(gua, out var result))
+        {
+            throw new InvalidCastException(
+                $"Cannot convert Gua '{gua}' to a {typeof(TGuaWithFixedCount).Name} " +
+                $"because it does not have exactly {TGuaWithFixedCount.ExpectedCount} lines.");
+        }
         return result;
     }
 
@@ -66,12 +70,6 @@ public static partial class GuaAsFixedCountExtensions
         this Gua? gua, [MaybeNullWhen(false)] out TGuaWithFixedCount result)
         where TGuaWithFixedCount : IGuaWithFixedCount<TGuaWithFixedCount>
     {
-        if (gua is null)
-        {
-            result = default;
-            return false;
-        }
-
-        return TGuaWithFixedCount.TryFromLines(gua, out result, out _);
+        return TGuaWithFixedCount.TryFromGua(gua, out result);
     }
 }

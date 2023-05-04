@@ -12,44 +12,41 @@ namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 /// 类型自己。
 /// The type itself.
 /// </typeparam>
-public interface IGuaWithFixedCount<TSelf> :
-    IReadOnlyList<Yinyang>, IComparable<TSelf>, IEquatable<TSelf>,
-    IParsable<TSelf>, IEqualityOperators<TSelf, TSelf, bool>,
-    IStringConvertibleForJson<TSelf>
-    where TSelf : IGuaWithFixedCount<TSelf>
+public interface IGuaWithFixedCount<TSelf> where TSelf : IGuaWithFixedCount<TSelf>
 {
     /// <summary>
     /// 转换为 <seealso cref="Gua"/> 。
-    /// Convert to <seealso cref="Gua"/>.
+    /// Convert to a <seealso cref="Gua"/>.
     /// </summary>
     /// <returns>
     /// 卦。
-    /// A Gua.
+    /// The Gua.
     /// </returns>
     Gua AsGua();
 
     /// <summary>
-    /// 从爻的集合创建。
-    /// Create from a collection of lines.
+    /// 应该具有的爻数。
+    /// The expected line count.
     /// </summary>
-    /// <param name="lines">
-    /// 爻。
-    /// The lines.
+    static abstract int ExpectedCount { get; }
+
+    /// <summary>
+    /// 从 <seealso cref="Gua"/> 转换。
+    /// Convert from a <seealso cref="Gua"/>.
+    /// </summary>
+    /// <param name="gua">
+    /// 卦。
+    /// The Gua.
     /// </param>
     /// <param name="result">
-    /// 创建结果。
-    /// Creation result.
-    /// </param>
-    /// <param name="message">
-    /// 创建失败时提供的消息。
-    /// Message provided when creation failed.
+    /// 结果。
+    /// The result.
     /// </param>
     /// <returns>
-    /// 一个指示创建成功与否的值。
-    /// A value indicates whether it has been successfully created or not.
+    /// 指示是否成功。
+    /// 除非爻的数量不对，否则总应该成功。
+    /// Indicates whether it has succeeded or failed.
+    /// It should always be successful unless the line count does not match.
     /// </returns>
-    static abstract bool TryFromLines(
-        IEnumerable<Yinyang> lines,
-        [MaybeNullWhen(false)] out TSelf result,
-        [MaybeNullWhen(true)] out string message);
+    static abstract bool TryFromGua(Gua? gua, [MaybeNullWhen(false)] out TSelf result);
 }
