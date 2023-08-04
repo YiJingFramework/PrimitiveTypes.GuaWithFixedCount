@@ -51,6 +51,6 @@ Console.WriteLine(GuaTrigram.Parse("101"));
 
 #region could be converted to Guas and back
 var gua = trigram.AsGua();
-var c = gua.As<GuaTrigram>();
+var c = gua.AsFixed<GuaTrigram>();
 Debug.Assert(trigram == c);
 #endregion
