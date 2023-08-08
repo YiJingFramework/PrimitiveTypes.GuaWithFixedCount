@@ -1,8 +1,10 @@
 ﻿#nullable enable
 
 using System.Collections;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using YiJingFramework.PrimitiveTypes.Serialization;
 
@@ -18,7 +20,8 @@ namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 public sealed partial class GuaWith999Lines :
     IReadOnlyList<Yinyang>, IComparable<GuaWith999Lines>, IEquatable<GuaWith999Lines>,
     IParsable<GuaWith999Lines>, IEqualityOperators<GuaWith999Lines, GuaWith999Lines, bool>,
-    IStringConvertibleForJson<GuaWith999Lines>, IGuaWithFixedCount<GuaWith999Lines>
+    IStringConvertibleForJson<GuaWith999Lines>, IGuaWithFixedCount<GuaWith999Lines>,
+    IBitwiseOperators<GuaWith999Lines, GuaWith999Lines, GuaWith999Lines>
 {
     private readonly Gua innerGua;
 
@@ -41,7 +44,7 @@ public sealed partial class GuaWith999Lines :
     public GuaWith999Lines(IEnumerable<Yinyang> lines)
     {
         ArgumentNullException.ThrowIfNull(lines);
-        this.innerGua = new Gua(lines);
+        this.innerGua = lines is Gua gua ? gua : new Gua(lines);
         if (this.innerGua.Count is not 999)
         {
             throw new ArgumentException(
@@ -161,9 +164,22 @@ public sealed partial class GuaWith999Lines :
     public static GuaWith999Lines Parse(string s)
     {
         ArgumentNullException.ThrowIfNull(s);
-        if (!Gua.TryParse(s, out var gua) || !TryFromGua(gua, out var result))
+
+        s = s.Trim();
+        if (s.Length is not 999)
             throw new FormatException($"Cannot parse \"{s}\" as {nameof(GuaWith999Lines)}.");
-        return result;
+
+        List<Yinyang> r = new(999);
+        foreach (var c in s)
+        {
+            r.Add(c switch
+            {
+                '0' => Yinyang.Yin,
+                '1' => Yinyang.Yang,
+                _ => throw new FormatException($"Cannot parse \"{s}\" as {nameof(GuaWith999Lines)}.")
+            });
+        }
+        return new(r);
     }
 
     /// <summary>
@@ -186,8 +202,30 @@ public sealed partial class GuaWith999Lines :
         [NotNullWhen(true)] string? s,
         [MaybeNullWhen(false)] out GuaWith999Lines result)
     {
-        result = null;
-        return Gua.TryParse(s, out var gua) && TryFromGua(gua, out result);
+        if (s?.Trim().Length is not 999)
+        {
+            result = null;
+            return false;
+        }
+
+        List<Yinyang> r = new(999);
+        foreach (var c in s)
+        {
+            switch (c)
+            {
+                case '0':
+                    r.Add(Yinyang.Yin);
+                    break;
+                case '1':
+                    r.Add(Yinyang.Yang);
+                    break;
+                default:
+                    result = null;
+                    return false;
+            }
+        }
+        result = new(r);
+        return true;
     }
 
     static GuaWith999Lines IParsable<GuaWith999Lines>.Parse(
@@ -247,6 +285,51 @@ public sealed partial class GuaWith999Lines :
         }
         result = new(gua);
         return true;
+    }
+    #endregion
+    #region calculating
+    /// <inheritdoc/>
+    public static GuaWith999Lines operator &(GuaWith999Lines left, GuaWith999Lines right)
+    {
+        static IEnumerable<Yinyang> Calculate(GuaWith999Lines g1, GuaWith999Lines g2)
+        {
+            foreach (var (y1, y2) in g1.Zip(g2))
+                yield return y1 & y2;
+        }
+        return new GuaWith999Lines(Calculate(left, right));
+    }
+
+    /// <inheritdoc/>
+    public static GuaWith999Lines operator |(GuaWith999Lines left, GuaWith999Lines right)
+    {
+        static IEnumerable<Yinyang> Calculate(GuaWith999Lines g1, GuaWith999Lines g2)
+        {
+            foreach (var (y1, y2) in g1.Zip(g2))
+                yield return y1 | y2;
+        }
+        return new GuaWith999Lines(Calculate(left, right));
+    }
+
+    /// <inheritdoc/>
+    public static GuaWith999Lines operator ^(GuaWith999Lines left, GuaWith999Lines right)
+    {
+        static IEnumerable<Yinyang> Calculate(GuaWith999Lines g1, GuaWith999Lines g2)
+        {
+            foreach (var (y1, y2) in g1.Zip(g2))
+                yield return y1 ^ y2;
+        }
+        return new GuaWith999Lines(Calculate(left, right));
+    }
+
+    /// <inheritdoc/>
+    public static GuaWith999Lines operator ~(GuaWith999Lines gua)
+    {
+        static IEnumerable<Yinyang> Calculate(GuaWith999Lines g)
+        {
+            foreach (var y in g)
+                yield return !y;
+        }
+        return new GuaWith999Lines(Calculate(gua));
     }
     #endregion
 }
