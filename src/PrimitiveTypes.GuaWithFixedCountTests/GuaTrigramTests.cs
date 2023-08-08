@@ -162,4 +162,24 @@ public class GuaTrigramTests
             Assert.AreEqual(gua2, gua1.AsGua());
         }
     }
+
+    [TestMethod()]
+    public void CalculatingTest()
+    {
+        Assert.AreEqual(GuaEmpty.Parse(""), GuaEmpty.Parse("") & GuaEmpty.Parse(""));
+        Assert.AreEqual(GuaWith1Line.Parse("1"), GuaWith1Line.Parse("1") & GuaWith1Line.Parse("1"));
+        Assert.AreEqual(GuaWith4Lines.Parse("1000"), GuaWith4Lines.Parse("1100") & GuaWith4Lines.Parse("1010"));
+
+        Assert.AreEqual(GuaEmpty.Parse(""), GuaEmpty.Parse("") | GuaEmpty.Parse(""));
+        Assert.AreEqual(GuaWith1Line.Parse("1"), GuaWith1Line.Parse("1") | GuaWith1Line.Parse("1"));
+        Assert.AreEqual(GuaWith4Lines.Parse("1110"), GuaWith4Lines.Parse("1100") | GuaWith4Lines.Parse("1010"));
+
+        Assert.AreEqual(GuaEmpty.Parse(""), GuaEmpty.Parse("") ^ GuaEmpty.Parse(""));
+        Assert.AreEqual(GuaWith1Line.Parse("0"), GuaWith1Line.Parse("1") ^ GuaWith1Line.Parse("1"));
+        Assert.AreEqual(GuaWith4Lines.Parse("0110"), GuaWith4Lines.Parse("1100") ^ GuaWith4Lines.Parse("1010"));
+
+        Assert.AreEqual(GuaEmpty.Parse(""), ~GuaEmpty.Parse(""));
+        Assert.AreEqual(GuaWith1Line.Parse("0"), ~GuaWith1Line.Parse("1"));
+        Assert.AreEqual(GuaWith2Lines.Parse("01"), ~GuaWith2Lines.Parse("10"));
+    }
 }
