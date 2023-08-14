@@ -17,11 +17,7 @@ namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 /// The lower a line, the smaller its index.
 /// </summary>
 [JsonConverter(typeof(JsonConverterOfStringConvertibleForJson<GuaWith999Lines>))]
-public sealed partial class GuaWith999Lines :
-    IReadOnlyList<Yinyang>, IComparable<GuaWith999Lines>, IEquatable<GuaWith999Lines>,
-    IParsable<GuaWith999Lines>, IEqualityOperators<GuaWith999Lines, GuaWith999Lines, bool>,
-    IStringConvertibleForJson<GuaWith999Lines>, IGuaWithFixedCount<GuaWith999Lines>,
-    IBitwiseOperators<GuaWith999Lines, GuaWith999Lines, GuaWith999Lines>
+public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines>
 {
     private readonly Gua innerGua;
 
@@ -53,28 +49,10 @@ public sealed partial class GuaWith999Lines :
     }
 
     #region Collecting
-    /// <summary>
-    /// 获取某一根爻的性质。
-    /// Get the attribute of a line.
-    /// </summary>
-    /// <param name="index">
-    /// 爻的序号。
-    /// The index of the line.
-    /// </param>
-    /// <returns>
-    /// 爻的性质。
-    /// The line.
-    /// </returns>
-    /// <exception cref="IndexOutOfRangeException">
-    /// <paramref name="index"/> 超出范围。
-    /// <paramref name="index"/> is out of range.
-    /// </exception>
+    /// <inheritdoc cref="Gua.this[int]" />
     public Yinyang this[int index] => this.innerGua[index];
 
-    /// <summary>
-    /// 获取爻的个数。
-    /// Get the count of the lines.
-    /// </summary>
+    /// <inheritdoc cref="Gua.Count" />
     public int Count => 999;
 
     static int IGuaWithFixedCount<GuaWith999Lines>.ExpectedCount => 999;
@@ -140,27 +118,7 @@ public sealed partial class GuaWith999Lines :
         return this.innerGua.ToString();
     }
 
-
-    /// <summary>
-    /// 从字符串转回。
-    /// Convert from a string.
-    /// </summary>
-    /// <param name="s">
-    /// 可以表示此卦的字符串。
-    /// The string that represents the Gua.
-    /// </param>
-    /// <returns>
-    /// 卦。
-    /// The Gua.
-    /// </returns>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="s"/> 是 <c>null</c> 。
-    /// <paramref name="s"/> is <c>null</c>.
-    /// </exception>
-    /// <exception cref="FormatException">
-    /// 传入字符串的格式不受支持。
-    /// The input string was not in the supported format.
-    /// </exception>
+    /// <inheritdoc />
     public static GuaWith999Lines Parse(string s)
     {
         ArgumentNullException.ThrowIfNull(s);
@@ -182,22 +140,7 @@ public sealed partial class GuaWith999Lines :
         return new(r);
     }
 
-    /// <summary>
-    /// 从字符串转回。
-    /// Convert from a string.
-    /// </summary>
-    /// <param name="s">
-    /// 可以表示此卦的字符串。
-    /// The string that represents the Gua.
-    /// </param>
-    /// <param name="result">
-    /// 卦。
-    /// The Gua.
-    /// </param>
-    /// <returns>
-    /// 一个指示转换成功与否的值。
-    /// A value indicates whether it has been successfully converted or not.
-    /// </returns>
+    /// <inheritdoc />
     public static bool TryParse(
         [NotNullWhen(true)] string? s,
         [MaybeNullWhen(false)] out GuaWith999Lines result)
@@ -257,14 +200,7 @@ public sealed partial class GuaWith999Lines :
     #endregion
 
     #region Converting with Guas
-    /// <summary>
-    /// 转换为 <seealso cref="Gua"/> 。
-    /// Convert to a <seealso cref="Gua"/>.
-    /// </summary>
-    /// <returns>
-    /// 卦。
-    /// The Gua.
-    /// </returns>
+    /// <inheritdoc />
     public Gua AsGua()
     {
         return this.innerGua;
@@ -287,6 +223,7 @@ public sealed partial class GuaWith999Lines :
         return true;
     }
     #endregion
+
     #region calculating
     /// <inheritdoc/>
     public static GuaWith999Lines operator &(GuaWith999Lines left, GuaWith999Lines right)

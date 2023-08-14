@@ -12,7 +12,12 @@ namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 /// 类型自己。
 /// The type itself.
 /// </typeparam>
-public interface IGuaWithFixedCount<TSelf> where TSelf : IGuaWithFixedCount<TSelf>
+public interface IGuaWithFixedCount<TSelf> :
+    IReadOnlyList<Yinyang>, IComparable<TSelf>, IEquatable<TSelf>,
+    IParsable<TSelf>, IEqualityOperators<TSelf, TSelf, bool>,
+    IStringConvertibleForJson<TSelf>,
+    IBitwiseOperators<TSelf, TSelf, TSelf>
+    where TSelf : IGuaWithFixedCount<TSelf>
 {
     /// <summary>
     /// 转换为 <seealso cref="Gua"/> 。
@@ -49,4 +54,46 @@ public interface IGuaWithFixedCount<TSelf> where TSelf : IGuaWithFixedCount<TSel
     /// It should always be successful unless the line count does not match.
     /// </returns>
     static abstract bool TryFromGua(Gua? gua, [MaybeNullWhen(false)] out TSelf result);
+
+    /// <summary>
+    /// 从字符串转回。
+    /// Convert from a string.
+    /// </summary>
+    /// <param name="s">
+    /// 可以表示此卦的字符串。
+    /// The string that represents the Gua.
+    /// </param>
+    /// <returns>
+    /// 卦。
+    /// The Gua.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="s"/> 是 <c>null</c> 。
+    /// <paramref name="s"/> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="FormatException">
+    /// 传入字符串的格式不受支持。
+    /// The input string was not in the supported format.
+    /// </exception>
+    static abstract TSelf Parse(string s);
+
+    /// <summary>
+    /// 从字符串转回。
+    /// Convert from a string.
+    /// </summary>
+    /// <param name="s">
+    /// 可以表示此卦的字符串。
+    /// The string that represents the Gua.
+    /// </param>
+    /// <param name="result">
+    /// 卦。
+    /// The Gua.
+    /// </param>
+    /// <returns>
+    /// 一个指示转换成功与否的值。
+    /// A value indicates whether it has been successfully converted or not.
+    /// </returns>
+    static abstract bool TryParse(
+        [NotNullWhen(true)] string? s,
+        [MaybeNullWhen(false)] out TSelf result);
 }
