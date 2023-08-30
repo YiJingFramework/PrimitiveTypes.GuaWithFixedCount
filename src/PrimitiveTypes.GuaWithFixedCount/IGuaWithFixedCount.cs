@@ -5,7 +5,7 @@ namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 
 /// <summary>
 /// 表示具有固定爻数的卦。
-/// Represent a Gua with fixed count of lines.
+/// Represent a Gua with fixed count of Yao-s.
 /// </summary>
 /// <typeparam name="TSelf">
 /// 类型自己。
@@ -29,7 +29,7 @@ public interface IGuaWithFixedCount<TSelf> :
 
     /// <summary>
     /// 应该具有的爻数。
-    /// The expected line count.
+    /// The expected Yao count.
     /// </summary>
     static abstract int ExpectedCount { get; }
 
@@ -49,7 +49,7 @@ public interface IGuaWithFixedCount<TSelf> :
     /// 指示是否成功。
     /// 除非爻的数量不对，否则总应该成功。
     /// Indicates whether it has succeeded or failed.
-    /// It should always be successful unless the line count does not match.
+    /// It should always be successful unless the Yao count does not match.
     /// </returns>
     static abstract bool TryFromGua(Gua? gua, [MaybeNullWhen(false)] out TSelf result);
 

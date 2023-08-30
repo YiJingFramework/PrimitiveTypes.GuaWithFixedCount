@@ -10,7 +10,7 @@
     /// 第 <c>1</c> 爻。
     /// Yao <c>1</c>.
     /// </param>
-    public GuaWith999Lines(Yinyang yao0, Yinyang yao1)
+    public GuaWith999Yaos(Yinyang yao0, Yinyang yao1)
     {
         this.innerGua = new Gua(yao0, yao1);
     }

@@ -17,17 +17,17 @@ namespace SourceGenerating
             // 2. Copy the codes from TemplatePath.txt
             // 3. Set TemplatePath.Path as the path of TemplateForSourceGeneration project
 
-            this.template = File.ReadAllText(Path.Combine(templateProjectPath, "GuaWith999Lines.cs"));
+            this.template = File.ReadAllText(Path.Combine(templateProjectPath, "GuaWith999Yaos.cs"));
         }
 
-        private string GenerateCode(int lineCount, string className)
+        private string GenerateCode(int yaoCount, string className)
         {
-            var templateClassName = $"GuaWith{lineCount}Lines";
+            var templateClassName = $"GuaWith{yaoCount}Yaos";
             if (className == null)
                 className = templateClassName;
 
             var builder = new StringBuilder(this.template);
-            _ = builder.Replace("999", lineCount.ToString());
+            _ = builder.Replace("999", yaoCount.ToString());
             _ = builder.Replace(templateClassName, className);
 
             _ = builder.AppendLine($"partial class {className}");
@@ -38,7 +38,7 @@ namespace SourceGenerating
     /// Initializes a new instance.
     /// </summary>");
 
-            for (int i = 0; i < lineCount; i++)
+            for (int i = 0; i < yaoCount; i++)
             {
                 _ = builder.AppendLine($@"    /// <param name=""yao{i}"">
     /// 第 <c>{i}</c> 爻。
@@ -47,21 +47,21 @@ namespace SourceGenerating
             }
 
             _ = builder.Append($"    public {className}(");
-            for (int i = 0; i < lineCount; i++)
+            for (int i = 0; i < yaoCount; i++)
             {
                 _ = builder.Append($@"Yinyang yao{i}, ");
             }
-            if (lineCount != 0)
+            if (yaoCount != 0)
                 _ = builder.Remove(builder.Length - 2, 2);
 
             _ = builder.AppendLine(")");
             _ = builder.Append(@"    {
         this.innerGua = new Gua(");
-            for (int i = 0; i < lineCount; i++)
+            for (int i = 0; i < yaoCount; i++)
             {
                 _ = builder.Append($@"yao{i}, ");
             }
-            if (lineCount != 0)
+            if (yaoCount != 0)
                 _ = builder.Remove(builder.Length - 2, 2);
 
             _ = builder.AppendLine(");");
@@ -73,15 +73,15 @@ namespace SourceGenerating
         public void Execute(GeneratorExecutionContext context)
         {
             context.AddSource($"GuaEmpty.g.cs", this.GenerateCode(0, "GuaEmpty"));
-            context.AddSource($"GuaWith1Line.g.cs", this.GenerateCode(1, "GuaWith1Line"));
-            context.AddSource($"GuaWith2Lines.g.cs", this.GenerateCode(2, null));
+            context.AddSource($"GuaWith1Yao.g.cs", this.GenerateCode(1, "GuaWith1Yao"));
+            context.AddSource($"GuaWith2Yaos.g.cs", this.GenerateCode(2, null));
             context.AddSource($"GuaTrigram.g.cs", this.GenerateCode(3, "GuaTrigram"));
-            context.AddSource($"GuaWith4Lines.g.cs", this.GenerateCode(4, null));
-            context.AddSource($"GuaWith5Lines.g.cs", this.GenerateCode(5, null));
+            context.AddSource($"GuaWith4Yaos.g.cs", this.GenerateCode(4, null));
+            context.AddSource($"GuaWith5Yaos.g.cs", this.GenerateCode(5, null));
             context.AddSource($"GuaHexagram.g.cs", this.GenerateCode(6, "GuaHexagram"));
-            context.AddSource($"GuaWith7Lines.g.cs", this.GenerateCode(7, null));
-            context.AddSource($"GuaWith8Lines.g.cs", this.GenerateCode(8, null));
-            context.AddSource($"GuaWith9Lines.g.cs", this.GenerateCode(9, null));
+            context.AddSource($"GuaWith7Yaos.g.cs", this.GenerateCode(7, null));
+            context.AddSource($"GuaWith8Yaos.g.cs", this.GenerateCode(8, null));
+            context.AddSource($"GuaWith9Yaos.g.cs", this.GenerateCode(9, null));
         }
 
         public void Initialize(GeneratorInitializationContext context)

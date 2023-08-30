@@ -41,7 +41,7 @@ public static partial class GuaAsFixedCountExtensions
         {
             throw new InvalidCastException(
                 $"Cannot convert Gua '{gua}' to a {typeof(TGuaWithFixedCount).Name} " +
-                $"because it does not have exactly {TGuaWithFixedCount.ExpectedCount} lines.");
+                $"because it does not have exactly {TGuaWithFixedCount.ExpectedCount} Yaos.");
         }
         return result;
     }
