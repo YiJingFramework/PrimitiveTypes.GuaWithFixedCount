@@ -40,16 +40,16 @@ namespace SourceGenerating
 
             for (int i = 0; i < lineCount; i++)
             {
-                _ = builder.AppendLine($@"    /// <param name=""line{i}"">
+                _ = builder.AppendLine($@"    /// <param name=""yao{i}"">
     /// 第 <c>{i}</c> 爻。
-    /// Line <c>{i}</c>.
+    /// Yao <c>{i}</c>.
     /// </param>");
             }
 
             _ = builder.Append($"    public {className}(");
             for (int i = 0; i < lineCount; i++)
             {
-                _ = builder.Append($@"Yinyang line{i}, ");
+                _ = builder.Append($@"Yinyang yao{i}, ");
             }
             if (lineCount != 0)
                 _ = builder.Remove(builder.Length - 2, 2);
@@ -59,7 +59,7 @@ namespace SourceGenerating
         this.innerGua = new Gua(");
             for (int i = 0; i < lineCount; i++)
             {
-                _ = builder.Append($@"line{i}, ");
+                _ = builder.Append($@"yao{i}, ");
             }
             if (lineCount != 0)
                 _ = builder.Remove(builder.Length - 2, 2);

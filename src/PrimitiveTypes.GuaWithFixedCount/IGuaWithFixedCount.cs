@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
-using YiJingFramework.PrimitiveTypes.Serialization;
 
 namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 
@@ -15,7 +14,6 @@ namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 public interface IGuaWithFixedCount<TSelf> :
     IReadOnlyList<Yinyang>, IComparable<TSelf>, IEquatable<TSelf>,
     IParsable<TSelf>, IEqualityOperators<TSelf, TSelf, bool>,
-    IStringConvertibleForJson<TSelf>,
     IBitwiseOperators<TSelf, TSelf, TSelf>
     where TSelf : IGuaWithFixedCount<TSelf>
 {

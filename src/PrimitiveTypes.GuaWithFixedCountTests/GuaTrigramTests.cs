@@ -13,7 +13,8 @@ public class GuaTrigramTests
 
         Assert.AreEqual(trigram1, trigram2);
 
-        _ = Assert.ThrowsException<ArgumentException>(() => {
+        _ = Assert.ThrowsException<ArgumentException>(() =>
+        {
             _ = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin });
         });
     }

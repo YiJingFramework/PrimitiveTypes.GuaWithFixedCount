@@ -1,50 +1,41 @@
 ﻿#nullable enable
 
 using System.Collections;
-using System.Diagnostics;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
-using YiJingFramework.PrimitiveTypes.Serialization;
 
 namespace YiJingFramework.PrimitiveTypes.GuaWithFixedCount;
 
 /// <summary>
 /// 有 <c>999</c> 根爻的卦。
 /// 爻位置越低，序号越小。
-/// A Gua with exactly <c>999</c> lines.
-/// The lower a line, the smaller its index.
+/// A Gua with exactly <c>999</c> Yaos.
+/// The lower the position of a Yao, the smaller its index.
 /// </summary>
-[JsonConverter(typeof(JsonConverterOfStringConvertibleForJson<GuaWith999Lines>))]
 public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines>
 {
     private readonly Gua innerGua;
 
-    /// <summary>
-    /// 创建新实例。
-    /// Initializes a new instance.
-    /// </summary>
-    /// <param name="lines">
-    /// 各爻的性质。
-    /// The lines' attributes.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="lines"/> 是 <c>null</c> 。
-    /// <paramref name="lines"/> is <c>null</c>.
-    /// </exception>
     /// <exception cref="ArgumentException">
-    /// <paramref name="lines"/> 的长度不是 <c>999</c> 。
-    /// <paramref name="lines"/> doesn't exactly contains <c>999</c> Yinyangs.
+    /// <paramref name="yaos"/> 的长度不是 <c>999</c> 。
+    /// <paramref name="yaos"/> doesn't exactly contains <c>999</c> Yinyangs.
     /// </exception>
-    public GuaWith999Lines(IEnumerable<Yinyang> lines)
+    /// <inheritdoc cref="Gua(IEnumerable{Yinyang})" />
+    public GuaWith999Lines(IEnumerable<Yinyang> yaos)
     {
-        ArgumentNullException.ThrowIfNull(lines);
-        this.innerGua = lines is Gua gua ? gua : new Gua(lines);
+        ArgumentNullException.ThrowIfNull(yaos);
+
+        if (yaos is Gua gua)
+            this.innerGua = gua;
+        else if (yaos is ImmutableArray<Yinyang> array)
+            this.innerGua = new Gua(array);
+        else
+            this.innerGua = new Gua(yaos);
+
         if (this.innerGua.Count is not 999)
         {
             throw new ArgumentException(
-                $"{nameof(lines)} should exactly contains 999 Yinyangs.", nameof(lines));
+                $"{nameof(yaos)} should exactly contains 999 Yaos.", nameof(yaos));
         }
     }
 
@@ -57,13 +48,13 @@ public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines
 
     static int IGuaWithFixedCount<GuaWith999Lines>.ExpectedCount => 999;
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public IEnumerator<Yinyang> GetEnumerator()
     {
         return this.innerGua.GetEnumerator();
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     IEnumerator IEnumerable.GetEnumerator()
     {
         return this.innerGua.GetEnumerator();
@@ -72,19 +63,19 @@ public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines
 
     #region Comparing
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public int CompareTo(GuaWith999Lines? other)
     {
         return this.innerGua.CompareTo(other?.innerGua);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override int GetHashCode()
     {
         return this.innerGua.GetHashCode();
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool Equals(object? other)
     {
         if (other is GuaWith999Lines gua)
@@ -92,19 +83,19 @@ public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines
         return false;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public bool Equals(GuaWith999Lines? other)
     {
         return this.innerGua.Equals(other?.innerGua);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public static bool operator ==(GuaWith999Lines? left, GuaWith999Lines? right)
     {
         return left?.innerGua == right?.innerGua;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public static bool operator !=(GuaWith999Lines? left, GuaWith999Lines? right)
     {
         return left?.innerGua != right?.innerGua;
@@ -112,7 +103,7 @@ public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines
     #endregion
 
     #region Converting
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override string ToString()
     {
         return this.innerGua.ToString();
@@ -127,7 +118,7 @@ public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines
         if (s.Length is not 999)
             throw new FormatException($"Cannot parse \"{s}\" as {nameof(GuaWith999Lines)}.");
 
-        List<Yinyang> r = new(999);
+        var r = ImmutableArray.CreateBuilder<Yinyang>(999);
         foreach (var c in s)
         {
             r.Add(c switch
@@ -137,7 +128,7 @@ public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines
                 _ => throw new FormatException($"Cannot parse \"{s}\" as {nameof(GuaWith999Lines)}.")
             });
         }
-        return new(r);
+        return new(r.MoveToImmutable());
     }
 
     /// <inheritdoc />
@@ -151,7 +142,7 @@ public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines
             return false;
         }
 
-        List<Yinyang> r = new(999);
+        var r = ImmutableArray.CreateBuilder<Yinyang>(999);
         foreach (var c in s)
         {
             switch (c)
@@ -167,7 +158,7 @@ public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines
                     return false;
             }
         }
-        result = new(r);
+        result = new(r.MoveToImmutable());
         return true;
     }
 
@@ -183,19 +174,6 @@ public sealed partial class GuaWith999Lines : IGuaWithFixedCount<GuaWith999Lines
         [MaybeNullWhen(false)] out GuaWith999Lines result)
     {
         return TryParse(s, out result);
-    }
-    #endregion
-
-    #region Serializing
-    static bool IStringConvertibleForJson<GuaWith999Lines>.FromStringForJson(
-        string s, [MaybeNullWhen(false)] out GuaWith999Lines result)
-    {
-        return TryParse(s, out result);
-    }
-
-    string IStringConvertibleForJson<GuaWith999Lines>.ToStringForJson()
-    {
-        return this.ToString();
     }
     #endregion
 

@@ -2,15 +2,15 @@
     /// 创建新实例。
     /// Initializes a new instance.
     /// </summary>
-    /// <param name="line0">
+    /// <param name="yao0">
     /// 第 <c>0</c> 爻。
-    /// Line <c>0</c>.
+    /// Yao <c>0</c>.
     /// </param>
-    /// <param name="line1">
+    /// <param name="yao1">
     /// 第 <c>1</c> 爻。
-    /// Line <c>1</c>.
+    /// Yao <c>1</c>.
     /// </param>
-    public GuaWith999Lines(Yinyang line0, Yinyang line1)
+    public GuaWith999Lines(Yinyang yao0, Yinyang yao1)
     {
-        this.innerGua = new Gua(line0, line1);
+        this.innerGua = new Gua(yao0, yao1);
     }

@@ -12,7 +12,8 @@ public class GuaAsFixedCountExtensionsTests
         var trigram = gua.AsFixed<GuaTrigram>();
         Assert.IsTrue(gua.SequenceEqual(trigram));
         Assert.AreEqual(gua, trigram.AsGua());
-        _ = Assert.ThrowsException<InvalidCastException>(() => {
+        _ = Assert.ThrowsException<InvalidCastException>(() =>
+        {
             _ = gua.AsFixed<GuaHexagram>();
         });
     }
