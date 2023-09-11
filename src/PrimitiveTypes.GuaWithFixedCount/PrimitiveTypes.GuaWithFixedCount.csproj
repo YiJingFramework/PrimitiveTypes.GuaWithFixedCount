@@ -8,7 +8,7 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<IsTrimmable>true</IsTrimmable>
 
-		<Version>3.0.1</Version>
+		<Version>3.0.2</Version>
 		<PackageId>YiJingFramework.PrimitiveTypes.GuaWithFixedCount</PackageId>
 		<PackageProjectUrl>https://github.com/YiJingFramework/PrimitiveTypes.GuaWithFixedCount/wiki</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/YiJingFramework/PrimitiveTypes.GuaWithFixedCount.git</RepositoryUrl>
@@ -37,7 +37,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="YiJingFramework.PrimitiveTypes" Version="2.1.0" />
+	  <PackageReference Include="YiJingFramework.PrimitiveTypes" Version="3.0.0" />
 	</ItemGroup>
 
 
