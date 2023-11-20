@@ -9,13 +9,13 @@ public class GuaTrigramTests
     public void GuaTrigramTest()
     {
         var trigram1 = new GuaTrigram(Yinyang.Yang, Yinyang.Yin, Yinyang.Yang);
-        var trigram2 = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang });
+        var trigram2 = new GuaTrigram([Yinyang.Yang, Yinyang.Yin, Yinyang.Yang]);
 
         Assert.AreEqual(trigram1, trigram2);
 
         _ = Assert.ThrowsException<ArgumentException>(() =>
         {
-            _ = new GuaTrigram(new[] { Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin });
+            _ = new GuaTrigram([Yinyang.Yang, Yinyang.Yin, Yinyang.Yang, Yinyang.Yin]);
         });
     }
 
