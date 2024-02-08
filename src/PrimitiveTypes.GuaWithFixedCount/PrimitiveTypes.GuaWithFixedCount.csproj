@@ -3,13 +3,14 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-
-		<RootNamespace>YiJingFramework.PrimitiveTypes.GuaWithFixedCount</RootNamespace>
+		
+		<AssemblyName>YiJingFramework.PrimitiveTypes.GuaWithFixedCount</AssemblyName>
+		<RootNamespace>$(AssemblyName)</RootNamespace>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<IsTrimmable>true</IsTrimmable>
 
-		<Version>4.0.0</Version>
-		<PackageId>YiJingFramework.PrimitiveTypes.GuaWithFixedCount</PackageId>
+		<Version>4.0.1</Version>
+		<PackageId>$(AssemblyName)</PackageId>
 		<PackageProjectUrl>https://github.com/YiJingFramework/PrimitiveTypes.GuaWithFixedCount/wiki</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/YiJingFramework/PrimitiveTypes.GuaWithFixedCount.git</RepositoryUrl>
 		<Description>此包提供了一系列类型，可以表示具有固定爻数的卦，便于在编译期及时发现爻数错误。 This package provides some types that represent the Guas with fixed count of Yao-s, so that the related erros could be found at compile time.
@@ -17,7 +18,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Authors>yueyinqiu5990</Authors>
+		<Authors>yueyinqiu</Authors>
 		<Company>YiJingFramework</Company>
 		<PackageIcon>Taichi.png</PackageIcon>
 		<RepositoryType>git</RepositoryType>
@@ -37,7 +38,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="YiJingFramework.PrimitiveTypes" Version="4.0.0" />
+	  <PackageReference Include="YiJingFramework.PrimitiveTypes" Version="4.0.1" />
 	</ItemGroup>
 
 
